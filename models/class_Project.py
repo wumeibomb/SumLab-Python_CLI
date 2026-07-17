@@ -4,6 +4,6 @@ class Project:
         self.title = title
         self.description = description
         self.due = due_date
-        self._tasks = None
+        self._tasks = []
         
 #one to many relationship with tasks

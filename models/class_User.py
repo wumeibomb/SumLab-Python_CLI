@@ -5,7 +5,7 @@ class User:
     def __init__(self, name, email):
         self.name = name
         self.email = email
-        self._projects = None #testing
+        self._projects = [] #testing
         User.user_list.append(self)
 
     @property
