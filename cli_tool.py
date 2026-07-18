@@ -1,4 +1,5 @@
 import argparse
+from models import class_User
 from models import class_Tasks
 from models import class_Project
 
@@ -11,54 +12,56 @@ from models import class_Project
 #Offer default values and optional flags to increase flexibility.
 #Handle exceptions with meaningful error messages, not cryptic stack traces.
 #Avoid overwhelming the user—display only relevant info, and provide examples where helpful.
-
 class User:
-    user_list = []
 
-    def __init__(self, user, email):
-        self.user = user
+    def __init__(self, username, email):
+        self.username = username
         self.email = email
-        self._projects = [] #testing
-        User.user_list.append(self)
-
+        print(username,email)
+    
     @property
     def projects(self):
         return self._projects
     
     @projects.setter
-    def project(self, value):
-        if not isinstance(value, User):
+    def projects(self, value):
+        if not isinstance(value, Project):
             raise TypeError("Must be of the USER class")
         self._projects = value
 
-    def add_user(self, user):
-         self.user_list.append(user)
-         print(user_list)
+User("random","random@mail.com")
 
-User("flop231", "flop@gmial.com")
 
-def add_user(args):
-        user = user_list.get(args.USER)
-        user_list[args.USER] = user
-        email = email_list.get(args.EMAIL)
-        email_list[args.EMAIL] = email
-        print(f"Added user {args.USER}")
-        print(user_list,email_list)
-    
-def manage_users(args):
-        users = user_list.get(args.list)
-        user_list[args.list] = users
-        
-        print(users)
-
+projects_list = {}
 email_list = {}
 user_list = {}
+
+def add_user(args):  
+        user = User(args.USER, args.EMAIL) 
+        user_list[args.USER] = user
+        email = email_list.get(args.EMAIL)
+        email_list[args.EMAIL]= email
+        print(user_list, email_list)
+        #ITS NOT ADDING MORE TO THE LIST OH MY GOSHHHH
+
+def manage_users(args):
+        users = user_list
+        print(users)
 
 def manage_projects(args):
      print(f"{args.username} added {args.title}")
 
+def manage_tasks(args):
+     #completion or deletion?
+     projects = projects_list.get(args.USER)
+     if projects:
+          for eachtask in projects.TASK:
+               if eachtask.title == args.title:
+                    task.complete()
+                    return
+     
 def add_manage_tasks(args):
-    task = class_Tasks(args.pro)
+    task = (args.pro)
     task.add_manage_tasks(task)
 
 def main():
@@ -71,20 +74,27 @@ def main():
     add_parser.add_argument("USER", help="Name of the USER!") #what you write after New
     add_parser.add_argument("EMAIL", help="Email of the New User")
     add_parser.set_defaults(func=add_user)
-    
+
     manageuser_parser = subparsers.add_parser("Users", help="Lists users")
     manageuser_parser.add_argument("list", help="list the users")
     manageuser_parser.set_defaults(func=manage_users)
 
-    managetasks_parser = subparsers.add_parser("add-task",help="Command to add a task")
+    managetasks_parser = subparsers.add_parser("add-task",help="Command to add a task: add-task taskname assignedproject")
     managetasks_parser.add_argument("TASK ", help="Task to be added")
+    managetasks_parser.add_argument("ASSIGNTO", help="Project to assign the task to")
     managetasks_parser.set_defaults(func=add_manage_tasks)
+    #need to complete tasks
 
     addproject_parser = subparsers.add_parser("add-project", help= "add a project to user")
     addproject_parser.add_argument("username", help="The projects user")
     addproject_parser.add_argument("title",help="The project's title")
     addproject_parser.set_defaults(func=manage_projects)
-    
+    #list projects under a user eg flopster has added this, then show othger projects if any.
+    #add tasks to projects
+
     args = parser.parse_args()
-    args.func(args)
+    if hasattr(args, "func"):
+        args.func(args)
+    else:
+        parser.print_help()
 

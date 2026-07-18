@@ -4,3 +4,7 @@ class Tasks:
         self.title = title
         self.status = status
         self.assigned_to = assigned_to
+        
+    def complete(self):
+        self.completed = True
+        print("task complete!!! feeling fulfilled?")
