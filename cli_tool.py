@@ -2,6 +2,7 @@ import argparse
 from models import class_User
 from models import class_Tasks
 from models import class_Project
+from datetime import datetime
 
 
 #create users, projects and tasks
@@ -46,9 +47,11 @@ def add_user(args):
         email = email_list.get(args.EMAIL)
         email_list[args.EMAIL]= email
 
-        with open("data/user_log.txt","w") as test:
-              test.write(f"New User Added : {username} & Email : {gmail}")
-
+        def addition_logging(bruh):
+            timestamp = datetime.now().strftime("%d-%m-%Y at %H:%M:%S")
+            with open("data/user_log.txt","a") as file:
+              file.write(f"[{timestamp}] - New User Added : {username} & Email : {gmail}\n")
+        addition_logging(User)
         #ITS NOT ADDING MORE TO THE LIST OH MY GOSHHHH
 
 def manage_users(args):
