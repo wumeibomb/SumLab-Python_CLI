@@ -12,6 +12,7 @@ from models import class_Project
 #Offer default values and optional flags to increase flexibility.
 #Handle exceptions with meaningful error messages, not cryptic stack traces.
 #Avoid overwhelming the user—display only relevant info, and provide examples where helpful.
+
 class User:
 
     def __init__(self, username, email):
@@ -29,7 +30,6 @@ class User:
             raise TypeError("Must be of the USER class")
         self._projects = value
 
-User("random","random@mail.com")
 
 
 projects_list = {}
@@ -37,11 +37,18 @@ email_list = {}
 user_list = {}
 
 def add_user(args):  
-        user = User(args.USER, args.EMAIL) 
+        user = User(args.USER, args.EMAIL)
         user_list[args.USER] = user
+
+        username = args.USER
+        gmail = args.EMAIL
+
         email = email_list.get(args.EMAIL)
         email_list[args.EMAIL]= email
-        print(user_list, email_list)
+
+        with open("data/user_log.txt","w") as test:
+              test.write(f"New User Added : {username} & Email : {gmail}")
+
         #ITS NOT ADDING MORE TO THE LIST OH MY GOSHHHH
 
 def manage_users(args):
