@@ -4,7 +4,7 @@ class Project:
         self.title = title
         self.description = description
         self.due = due_date
-    
+        self.tasks = []
     
     def assign_project(self, user):
          user.project = self

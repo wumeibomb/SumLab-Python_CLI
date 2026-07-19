@@ -1,5 +1,5 @@
 
-class User:
+class User():
     user_list = []
 
     def __init__(self, username, email):
