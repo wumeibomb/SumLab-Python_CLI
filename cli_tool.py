@@ -98,7 +98,7 @@ def add_user(args):
 #IF USER EXISTS 
 
 def manage_users(args):
-    
+    pass
     
 
 #bruh = User()
