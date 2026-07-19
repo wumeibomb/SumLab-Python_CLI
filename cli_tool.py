@@ -1,4 +1,5 @@
 import argparse
+import json
 from models import class_User
 from models import class_Tasks
 from models import class_Project
@@ -22,7 +23,6 @@ class User:
         self.email = email
         self._projects = []
         print(username,email)
-    
     
     @property
     def projects(self):
@@ -54,6 +54,9 @@ class Project(User):
     def add_task(self, task):
          self.tasks.append(task)
          print("brih")
+    
+    def del_project(self):
+        del self._value
 
 class Tasks:
     def __init__(self, title, status, assigned_to):
@@ -64,6 +67,7 @@ class Tasks:
     def complete(self):
         self.completed = True
         print("task complete!!! feeling fulfilled?")
+    
    
 projects_list = {}
 email_list = {}
@@ -73,24 +77,29 @@ def add_user(args):
         user = User(args.USER, args.EMAIL)
         user_list[args.USER] = user
 
-        username = args.USER
-        gmail = args.EMAIL
+        new_user = {
+            "username": "nsd s",
+            "email": "bruh"
+        }
 
         email = email_list.get(args.EMAIL)
         email_list[args.EMAIL]= email
 
-        def addition_logging(bruh):
+        def new_user_logging(bruh):
             timestamp = datetime.now().strftime("%d-%m-%Y at %H:%M:%S")
-            with open("data/main.json","a") as file:
-                file.write(f'"username" : "{username}", "email" : "{gmail}"')
+            with open("data/main.json","r+") as file:
+                userdata = json.load(file) 
+                userdata["users"].append(new_user)
+                file.seek(0)
+                json.dump(userdata,file,indent=2)
                            #"email" : {gmail}}")
               #file.write(f"[{timestamp}] - New User Added : {username} & Email : {gmail}\n")
-        addition_logging(User)
-
+        new_user_logging(User)
+#IF USER EXISTS 
 
 def manage_users(args):
-        test = getattr(args,args.USER)
-        print("fsdv", test)
+    pass
+    
 
 #bruh = User()
 
