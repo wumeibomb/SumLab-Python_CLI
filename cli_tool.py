@@ -23,6 +23,7 @@ class User:
         self._projects = []
         print(username,email)
     
+    
     @property
     def projects(self):
         return self._projects
@@ -38,9 +39,10 @@ class User:
          print("to delete")
          del self._projects
 
-class Project:
+class Project(User):
 
     def __init__(self, title, description, due_date):
+        super().__init__(self.username, self.email)
         self.title = title
         self.description = description
         self.due = due_date
@@ -113,7 +115,7 @@ def manage_tasks(args):
                     class_Tasks.complete()
                     return
      
-     
+
 def add_manage_tasks(args):
     task = (args.pro)
     task.add_manage_tasks(task)
@@ -146,7 +148,7 @@ def main():
 
     deleteproject_parser = subparsers.add_parser("del-project", help= "to delete project")
     deleteproject_parser.add_argument("PROJECT", help="Project to delete")
-    deleteproject_parser.set_defaults(func=Project.)
+    deleteproject_parser.set_defaults(func=Project)
     #list projects under a user eg flopster has added this, then show othger projects if any.
     #add tasks to projects
 
