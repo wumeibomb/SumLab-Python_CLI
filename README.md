@@ -1,5 +1,5 @@
 # Python CLI Project!
- - This is a summative lab project done to showcase the ability to create a functional CLI.
+ - This is a summative lab project done to showcase the ability to create a functional CLI. (please ignore folder models and file data/user_log.txt)
 
 ## To access:
  1) To use this CLI tool, clone this git repo onto your computer and ensure that you have python installed. For this CLI, pip install is not requried.
@@ -19,5 +19,6 @@
 ## Complications:
  - Testing not implemented 
  - And as of now, no way to assign projects to specific users.
+ - Ran into an issue with trying to implement tabulate to the CLI.
  
 
