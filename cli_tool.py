@@ -58,7 +58,7 @@ def manage_projects(args):
         
                     if user_project == "":
                         print("Please create a user first")
-                        
+
                     user_project.append(projects)
                     file.seek(0)
                     json.dump(userdata ,file, indent=2)
@@ -80,38 +80,55 @@ def manage_users(args):
 
 
 def manage_tasks(args):
+     task = {
+          "TODO": f"{args.task}"
+          }
+     
      #completion
      with open(log_file,"r+") as file:
             userdata = json.load(file)
             for eachuserproject in userdata["users"]:
+
                 user_tasks = eachuserproject["projects"]
+
         
                 if user_tasks == "":
-                    print("Please create a user first")
+                   print("Please create a user first")
                         
-                user_tasks.append(projects)
+                user_tasks.append(task)
                 file.seek(0)
                 json.dump(userdata ,file, indent=2)
 
-     projects = projects_list.get(args.USER)
-     if projects:
-          for eachtask in projects.TASK:
-               if eachtask.title == args.title:
-                    Tasks.complete()
-                    return
+     #projects = projects_list.get(args.USER)
+     #if projects:
+      #    for eachtask in projects.TASK:
+       #        if eachtask.title == args.title:
+        #            Tasks.complete()
+          #          return
      
 
 def add_manage_tasks(args):
+        tasks = {
+             "TODO": f"{args.task}"
+        }
+        print(tasks)
+
         with open(log_file,"r+") as data:
-            test = json.load(data)
-        if test["users"] == []:
+            userdata = json.load(data)
+
+        if userdata["users"] == []:
             print("Can't create a task, no users or projects")
-        else:
-            for item in test["projects"]:
-                if item["tasks"] == []:
+
+            for eachproject in userdata["users"]:
+                item = eachproject["projects"]
+                for eachitem in item:
+                   user_tasks =  eachitem["tasks"]
+
+                if user_tasks == []:
                     print("no tasks as of now!")
-                else:
-                    print(item["tasks"])
+            user_tasks.append(tasks)
+            data.seek(0)
+            json.dump(userdata ,data, indent=2)
 
 
 def main():
@@ -129,8 +146,8 @@ def main():
     manageuser_parser.set_defaults(func=manage_users)
 
     managetasks_parser = subparsers.add_parser("add-task",help="Command to add a task: add-task taskname assignedproject")
-    managetasks_parser.add_argument("TASK", help="Task to be added")
-    managetasks_parser.add_argument("ASSIGNTO", help="Project to assign the task to")
+    managetasks_parser.add_argument("task", help="Task to be added")
+    managetasks_parser.add_argument("assignto", help="Project to assign the task to")
     managetasks_parser.set_defaults(func=add_manage_tasks)
     #need to complete tasks
 

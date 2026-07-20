@@ -15,10 +15,11 @@
      - add-project - Adds a project to the specified username
      - add-task - Adds a task to the project 
      
-    
+## Class Methods!:
+ - class_User, this class is the parent class, seen to be inherited by the Project class.  
 ## Complications:
  - Testing not implemented 
- - And as of now, no way to assign projects to specific users.
+ - doing add-projects and add-task before creating a user causes an error
  - Ran into an issue with trying to implement tabulate to the CLI.
  
 
