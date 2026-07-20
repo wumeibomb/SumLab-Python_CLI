@@ -16,7 +16,9 @@
      - add-task - Adds a task to the project 
      
 ## Class Methods!:
- - class_User, this class is the parent class, seen to be inherited by the Project class.  
+ - class_User, this class is the parent class, seen to be inherited by the Project class. 
+ - class_Project, this class is a child of the User class. Used to add projects to the user's profile
+ - class_Tasks, this class is a child of Project. Adds tasks to specified projects. 
 ## Complications:
  - Testing not implemented 
  - doing add-projects and add-task before creating a user causes an error
