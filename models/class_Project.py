@@ -1,6 +1,10 @@
+import class_User
 
-class Project:
+
+class Project(class_User):
+
     def __init__(self, title, description, due_date):
+        super().__init__(self.username, self.email)
         self.title = title
         self.description = description
         self.due = due_date
@@ -12,6 +16,9 @@ class Project:
     def add_task(self, task):
          self.tasks.append(task)
          print("brih")
+    
+    def del_project(self):
+        del self._value
 #class Project:
 #    def __init__(self, title, description, due_date):
  #       self.title = title

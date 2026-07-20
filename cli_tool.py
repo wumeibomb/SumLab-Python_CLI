@@ -15,7 +15,7 @@ from datetime import datetime
 #Handle exceptions with meaningful error messages, not cryptic stack traces.
 #Avoid overwhelming the user—display only relevant info, and provide examples where helpful.
 
-log_file = "data/user_log.txt"
+log_file = "data/main.json"
 class User:
 
     def __init__(self, username, email):
@@ -24,6 +24,10 @@ class User:
         self._projects = []
         print(username,email)
     
+    def add_project(self, project):
+        self.projects.append(project)
+        print(self.projects)
+        
     @property
     def projects(self):
         return self._projects
@@ -78,41 +82,51 @@ def add_user(args):
         user_list[args.USER] = user
 
         new_user = {
-            "username": "nsd s",
-            "email": "bruh"
+            "id": f"{datetime.now().strftime("%H%M%S")}",
+            "username": f"{args.USER}",
+            "email": f"{args.EMAIL}"
         }
 
         email = email_list.get(args.EMAIL)
         email_list[args.EMAIL]= email
 
         def new_user_logging(bruh):
-            timestamp = datetime.now().strftime("%d-%m-%Y at %H:%M:%S")
-            with open("data/main.json","r+") as file:
+            with open(log_file,"r+") as file:
                 userdata = json.load(file) 
                 userdata["users"].append(new_user)
                 file.seek(0)
-                json.dump(userdata,file,indent=2)
+                json.dump(userdata,file, indent=2)
                            #"email" : {gmail}}")
               #file.write(f"[{timestamp}] - New User Added : {username} & Email : {gmail}\n")
         new_user_logging(User)
+
+
+
 #IF USER EXISTS 
+def manage_projects(args):
+    projects = {
+         "title": f"{args.title}",
+         "description": f"{args.description}",
+         "due_date" : f"{args.duedate}"
+     }
+    
+    test = open(log_file,)
+    data = json.load(test)
+
+    def project_logging(project):
+                with open(log_file,"r+") as file:
+                    userdata = json.load(file) 
+                    userdata["projects"].append(projects)
+                    file.seek(0)
+                    json.dump(userdata ,file, indent=2)
+            #else:
+                #print("Project with the same title already exists.")
+         # print("User not in database, please make an account via the New command")
+    project_logging(Project)
 
 def manage_users(args):
     pass
-    
 
-#bruh = User()
-
-def manage_projects(args):
-     print(f"{args.username} added {args.title}")
-
-     def project_logging(bruh):
-        if args.title in log_file:
-             with open(log_file, "a") as file:
-                file.write(f"{args.username} added {args.title}\n")
-        else:
-             print("This project is already in the database.")
-        project_logging(Project)
 
 
 def manage_tasks(args):
@@ -150,6 +164,7 @@ def main():
     #need to complete tasks
 
     addproject_parser = subparsers.add_parser("add-project", help= "Add a project to user")
+    addproject_parser.add_argument("User", help= "add project to this user")
     addproject_parser.add_argument("title",help="The project's title")
     addproject_parser.add_argument("description", help="Description of the project")
     addproject_parser.add_argument("duedate", help="Due date of the project")
