@@ -1,8 +1,7 @@
 import argparse
 import json
-from models import class_User
-from models import class_Tasks
-from models import class_Project
+#from tabulate import tabulate, why isn't this working...
+from models import User, Tasks, Project
 from datetime import datetime
 
 
@@ -16,79 +15,19 @@ from datetime import datetime
 #Avoid overwhelming the user—display only relevant info, and provide examples where helpful.
 
 log_file = "data/main.json"
-class User:
 
-    def __init__(self, username, email):
-        self.username = username
-        self.email = email
-        self._projects = []
-        print(username,email)
-    
-    def add_project(self, project):
-        self.projects.append(project)
-        print(self.projects)
-        
-    @property
-    def projects(self):
-        return self._projects
-    
-    @projects.setter
-    def projects(self, value):
-        if not isinstance(value, Project):
-            raise TypeError("Must be of the USER class")
-        self._projects = value
-    
-    @projects.deleter
-    def projects(self):
-         print("to delete")
-         del self._projects
-
-class Project(User):
-
-    def __init__(self, title, description, due_date):
-        super().__init__(self.username, self.email)
-        self.title = title
-        self.description = description
-        self.due = due_date
-        self.tasks = []
-    
-    def assign_project(self, user):
-         user.project = self
-        
-    def add_task(self, task):
-         self.tasks.append(task)
-         print("brih")
-    
-    def del_project(self):
-        del self._value
-
-class Tasks:
-    def __init__(self, title, status, assigned_to):
-        self.title = title
-        self.status = status
-        self.assigned_to = assigned_to
-        
-    def complete(self):
-        self.completed = True
-        print("task complete!!! feeling fulfilled?")
-    
-   
 projects_list = {}
 email_list = {}
-user_list = {}
+user_list =  {}
 
 def add_user(args):  
-        user = User(args.USER, args.EMAIL)
-        user_list[args.USER] = user
-
+        
         new_user = {
             "id": f"{datetime.now().strftime("%H%M%S")}",
             "username": f"{args.USER}",
-            "email": f"{args.EMAIL}"
+            "email": f"{args.EMAIL}",
+            "projects": f""
         }
-
-        email = email_list.get(args.EMAIL)
-        email_list[args.EMAIL]= email
 
         def new_user_logging(bruh):
             with open(log_file,"r+") as file:
@@ -109,13 +48,10 @@ def manage_projects(args):
          "description": f"{args.description}",
          "due_date" : f"{args.duedate}"
      }
-    
-    test = open(log_file,)
-    data = json.load(test)
 
     def project_logging(project):
                 with open(log_file,"r+") as file:
-                    userdata = json.load(file) 
+                    userdata = json.load(file)
                     userdata["projects"].append(projects)
                     file.seek(0)
                     json.dump(userdata ,file, indent=2)
@@ -124,9 +60,14 @@ def manage_projects(args):
          # print("User not in database, please make an account via the New command")
     project_logging(Project)
 
-def manage_users(args):
-    pass
 
+def manage_users(args):
+    with open(log_file, "r") as file:
+        users = json.load(file)
+        if users["users"] == []:
+            print("No current users, please make an account using the New command")
+        else:
+            print(users["users"])
 
 
 def manage_tasks(args):
@@ -135,13 +76,23 @@ def manage_tasks(args):
      if projects:
           for eachtask in projects.TASK:
                if eachtask.title == args.title:
-                    class_Tasks.complete()
+                    Tasks.complete()
                     return
      
 
 def add_manage_tasks(args):
-    task = (args.pro)
-    task.add_manage_tasks(task)
+    with open(log_file,"r+") as data:
+        test = json.load(data)
+        for item in test["projects"]:
+            if item["tasks"] == []:
+                 print("no tasks as of now!")
+            else:
+                print(item["tasks"])
+
+
+
+
+
 
 def main():
 
@@ -158,7 +109,7 @@ def main():
     manageuser_parser.set_defaults(func=manage_users)
 
     managetasks_parser = subparsers.add_parser("add-task",help="Command to add a task: add-task taskname assignedproject")
-    managetasks_parser.add_argument("TASK ", help="Task to be added")
+    managetasks_parser.add_argument("TASK", help="Task to be added")
     managetasks_parser.add_argument("ASSIGNTO", help="Project to assign the task to")
     managetasks_parser.set_defaults(func=add_manage_tasks)
     #need to complete tasks
@@ -170,11 +121,11 @@ def main():
     addproject_parser.add_argument("duedate", help="Due date of the project")
     addproject_parser.set_defaults(func=manage_projects)
 
-    deleteproject_parser = subparsers.add_parser("del-project", help= "to delete project")
-    deleteproject_parser.add_argument("PROJECT", help="Project to delete")
-    deleteproject_parser.set_defaults(func=Project)
+   
     #list projects under a user eg flopster has added this, then show othger projects if any.
     #add tasks to projects
+
+
 
     args = parser.parse_args()
     if hasattr(args, "func"):
