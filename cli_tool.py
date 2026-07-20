@@ -26,7 +26,7 @@ def add_user(args):
             "id": f"{datetime.now().strftime("%H%M%S")}",
             "username": f"{args.USER}",
             "email": f"{args.EMAIL}",
-            "projects": []
+            "projects": [{"tasks": []}]
         }
 
         def new_user_logging(bruh):
@@ -81,6 +81,18 @@ def manage_users(args):
 
 def manage_tasks(args):
      #completion
+     with open(log_file,"r+") as file:
+            userdata = json.load(file)
+            for eachuserproject in userdata["users"]:
+                user_tasks = eachuserproject["projects"]
+        
+                if user_tasks == "":
+                    print("Please create a user first")
+                        
+                user_tasks.append(projects)
+                file.seek(0)
+                json.dump(userdata ,file, indent=2)
+
      projects = projects_list.get(args.USER)
      if projects:
           for eachtask in projects.TASK:
