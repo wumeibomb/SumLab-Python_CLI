@@ -26,7 +26,7 @@ def add_user(args):
             "id": f"{datetime.now().strftime("%H%M%S")}",
             "username": f"{args.USER}",
             "email": f"{args.EMAIL}",
-            "projects": f""
+            "projects": []
         }
 
         def new_user_logging(bruh):
@@ -50,9 +50,16 @@ def manage_projects(args):
      }
 
     def project_logging(project):
+                
                 with open(log_file,"r+") as file:
                     userdata = json.load(file)
-                    userdata["projects"].append(projects)
+                    for eachuserproject in userdata["users"]:
+                        user_project = eachuserproject["projects"]
+        
+                    if user_project == "":
+                        print("Please create a user first")
+                        
+                    user_project.append(projects)
                     file.seek(0)
                     json.dump(userdata ,file, indent=2)
             #else:
@@ -64,10 +71,12 @@ def manage_projects(args):
 def manage_users(args):
     with open(log_file, "r") as file:
         users = json.load(file)
-        if users["users"] == []:
-            print("No current users, please make an account using the New command")
-        else:
-            print(users["users"])
+        for eachusername in users["users"]:
+            username = eachusername["username"]
+            if username == [] or users["users"] == []:
+                print("No current users, please make an account using the New command")
+            else:
+                print(username)
 
 
 def manage_tasks(args):
@@ -81,23 +90,22 @@ def manage_tasks(args):
      
 
 def add_manage_tasks(args):
-    with open(log_file,"r+") as data:
-        test = json.load(data)
-        for item in test["projects"]:
-            if item["tasks"] == []:
-                 print("no tasks as of now!")
-            else:
-                print(item["tasks"])
-
-
-
-
+        with open(log_file,"r+") as data:
+            test = json.load(data)
+        if test["users"] == []:
+            print("Can't create a task, no users or projects")
+        else:
+            for item in test["projects"]:
+                if item["tasks"] == []:
+                    print("no tasks as of now!")
+                else:
+                    print(item["tasks"])
 
 
 def main():
 
     parser = argparse.ArgumentParser(description= "Python Project Management CLI tool.")
-# options: create user DOME, manage users(display the users) and select them, display projects - assign task to projects and mark complete.
+# select them, display projects - assign task to projects and mark complete.
 #if certain user selected, open this set of projects. don't show the others.
     subparsers = parser.add_subparsers()
     add_parser = subparsers.add_parser("New", help="Add a new USER!") #new user, no list of users
@@ -124,8 +132,6 @@ def main():
    
     #list projects under a user eg flopster has added this, then show othger projects if any.
     #add tasks to projects
-
-
 
     args = parser.parse_args()
     if hasattr(args, "func"):
