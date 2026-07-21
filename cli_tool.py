@@ -61,6 +61,7 @@ def manage_projects(args):
                         print("Please create a user first")
 
                     user_project.append(projects)
+                    print(f"{args.title} Added!")
                     file.seek(0)
                     json.dump(userdata ,file, indent=2)
             #else:
@@ -94,15 +95,19 @@ def add_manage_tasks(args):
 
             for eachproject in userdata["users"]:
                 item = eachproject["projects"]
-                if item != {args.assignto}:
+                for eachitem in item:
+                        project_title = eachitem["title"]
+
+                if project_title == {args.assignto}:
                     print("This project does not exist for this user")
                 else:
                     for eachitem in item:
                         user_tasks =  eachitem["tasks"]
 
                         if user_tasks == []:
-                            print("no tasks as of now!")
-                        user_tasks.append(tasks)
+                            print("no tasks as of now! OR new task added!!(lmao)")
+
+                    user_tasks.append(tasks)
                     data.seek(0)
                     json.dump(userdata ,data, indent=2)
 
