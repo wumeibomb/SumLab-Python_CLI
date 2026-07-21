@@ -35,6 +35,7 @@ def add_user(args):
                 userdata["users"].append(new_user)
                 file.seek(0)
                 json.dump(userdata,file, indent=2)
+                print(f"{args.USER} added!")
                            #"email" : {gmail}}")
               #file.write(f"[{timestamp}] - New User Added : {username} & Email : {gmail}\n")
         new_user_logging(User)
@@ -61,7 +62,7 @@ def manage_projects(args):
                         print("Please create a user first")
 
                     user_project.append(projects)
-                    print(f"{args.title} Added!")
+                    print(f"{args.title} Project Added!")
                     file.seek(0)
                     json.dump(userdata ,file, indent=2)
             #else:
@@ -106,6 +107,8 @@ def add_manage_tasks(args):
 
                         if user_tasks == []:
                             print("no tasks as of now! OR new task added!!(lmao)")
+                        else:
+                             print(f"{args.task} added to {args.assignto}!")
 
                     user_tasks.append(tasks)
                     data.seek(0)
