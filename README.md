@@ -13,17 +13,17 @@
      - New - Adds a new user, takes username and email
      - Users - lists users within the database
      - add-project - Adds a project to the specified username
-     - add-task - Adds a task to the project 
- - Info(misc):
-     - the duedate argument for projects takes the format ddmmyy
+     - add-task - Adds a task to the specified project 
+ - Info (misc):
+     - the duedate argument for add-project takes the format ddmmyy
      
-## Class Methods!:
- - class_User, this class is the parent class, seen to be inherited by the Project class. 
- - class_Project, this class is a child of the User class. Used to add projects to the user's profile
+## Class Methods!
+ - class_User, this class is the parent class, seen to be inherited by the Project class. Allows user addition.
+ - class_Project, this class is a child of the User class. Used to add projects to the user's profile.
  - class_Tasks, this class is a child of Project. Adds tasks to specified projects.
 
 ## Complications:
- - Testing not implemented .
+ - Testing not fully implemented .
  - Doing add-projects and add-task before creating a user causes an error.
  - add-task before add-project also causes error.
  - Ran into an issue with trying to implement tabulate to the CLI.
