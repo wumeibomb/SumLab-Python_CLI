@@ -31,10 +31,12 @@ def add_user(args):
 
         def new_user_logging(bruh):
             with open(log_file,"r+") as file:
-                userdata = json.load(file) 
+                userdata = json.load(file)
+
                 userdata["users"].append(new_user)
                 file.seek(0)
                 json.dump(userdata,file, indent=2)
+
                 print(f"{args.USER} added!")
                            #"email" : {gmail}}")
               #file.write(f"[{timestamp}] - New User Added : {username} & Email : {gmail}\n")
@@ -93,7 +95,7 @@ def add_manage_tasks(args):
 
             if userdata["users"] == []:
                 print("Can't create a task, no users or projects")
-
+            
             for eachproject in userdata["users"]:
                 item = eachproject["projects"]
                 for eachitem in item:

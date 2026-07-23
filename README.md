@@ -23,8 +23,9 @@
  - class_Tasks, this class is a child of Project. Adds tasks to specified projects.
 
 ## Complications:
- - Testing not implemented 
- - doing add-projects and add-task before creating a user causes an error
+ - Testing not implemented .
+ - Doing add-projects and add-task before creating a user causes an error.
+ - add-task before add-project also causes error.
  - Ran into an issue with trying to implement tabulate to the CLI.
  
 
